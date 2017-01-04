@@ -6,22 +6,34 @@ void main()
 {
 	std::fstream file;
 
-	file << "MyLog" << std::ios_base::out;
+	file.open("MyLog.txt");
+	if (file.is_open())
+	{
+		file.close();
+		file.open("data.txt", std::ios_base::out);
+	}
+	file.close();
+
+	file.open("MyLog.txt", std::ios_base::app);
+	if (file.is_open())
+	{
+		std::string temp;
+		getline(std::cin, temp);
+		std::cout << temp << std::endl;
+	}
+	file.close();
+
 	file.open("MyLog.txt", std::ios_base::in);
 	if (file.is_open())
 	{
 		std::string temp;
-		getline(file, temp);
-		std::cout << temp << std::endl;
+		while (std::getline(file, temp))
+			file << temp << std::endl;
 	}
-	system("pause");
 	file.close();
 
-	file.open("dino.dat", std::ios_base::app);
-	if (file.is_open())
-	{
-		file << "wpoo!" << std::endl;
-	}
+	file.open("data.txt", std::ios_base::out);
 	file.close();
+
 	system("pause");
 }
